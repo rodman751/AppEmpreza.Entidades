@@ -1,0 +1,104 @@
+﻿@model IEnumerable<AppEmpreza.Entidades.Empleados>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a href="#" class="btn btn btn-outline-primary" id="openCreateModal"><i class="bi bi-plus-circle" style="color:#3B71CA"></i> Crear</a>
+</p>
+<div class="table-responsive">
+    <table class="table table-dark">
+        <thead class="thead-dark text-center">
+            <tr>
+                <th>ID</th>
+                <th>Nombres</th>
+                <th>Apellidos</th>
+                <th>Dirección</th>
+                <th>Fecha de Nacimiento</th>
+                <th>Salario</th>
+                <th>Comisión</th>
+                <th>ID de Cargo</th>
+                <th>ID de Departamento</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody class="text-center">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Nombres)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Apellidos)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Direcion)</td>
+                    <td>@Html.DisplayFor(modelItem => item.FechaNacimietno)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Salario)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Comisiono)</td>
+                    <td>@Html.DisplayFor(modelItem => item.CargoId)</td>
+                    <td>@Html.DisplayFor(modelItem => item.DepartamentoId)</td>
+                    <td>
+                        <div class="btn-group-sm-5" role="group">
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary cargar"><i class="bi bi-pencil-square" style="color:#3B71CA"></i> Editar</a>
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-success cargar"><i class="bi bi-book-fill" style="color:#14A44D"></i> Detalles</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger cargar"><i class="bi bi-trash" style="color:#DC4C64"></i> Borrar</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@{
+    var successMessage = TempData["SuccessMessage"] as string;
+}
+
+@if (!string.IsNullOrEmpty(successMessage))
+{
+    <div class="alert alert-primary" role="alert">
+        @successMessage
+    </div>
+}
+<div id="modal-container" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content" style="height:900px">
+            <!-- El contenido del modal se cargará aquí -->
+        </div>
+    </div>
+</div>
+<div id="loading" style="display: none;">
+    <p>Cargando...</p>
+</div>
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#openCreateModal').on('click', function () {
+                $('#loading').show(); // Mostrar el indicador de carga
+
+                $.get('@Url.Action("Create", "Empleados")', function (data) {
+                    $('#modal-container .modal-content').html(data);
+                    $('#modal-container').modal({
+                        backdrop: 'static',
+                        keyboard: false,
+                        show: true
+                    });
+                    $('#modal-container').modal('show');
+
+                    $('#loading').hide(); // Ocultar el indicador de carga
+                });
+            });
+        });
+        $(document).ready(function () {
+            $('.cargar').on('click', function () {
+                $('#loading').show(); // Mostrar el indicador de carga
+
+                // Aquí va tu código para editar, mostrar detalles o borrar
+
+                $('#loading').hide(); // Ocultar el indicador de carga
+            });
+        });
+    </script>
+}
