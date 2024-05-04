@@ -8,14 +8,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/AppEmpresza.MVC.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-    <style> 
-        body{
-            background-color: dimgray;
-        }
-        *{
-            color: white;
-        }
-    </style>
+   
 </head>
 <body>
     <header>
@@ -40,7 +33,7 @@
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" asp-controller="Departamentos" asp-action="Index">Departamentos</a></li>
                                 <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" href="#">Cargo</a></li>
+                                <li><a class="dropdown-item" asp-controller="Cargo" asp-action="Index">Cargo</a></li>
                                 <li><hr class="dropdown-divider" /></li>
                                 <li><a class="dropdown-item" href="#">Empleados</a></li>
                             </ul>

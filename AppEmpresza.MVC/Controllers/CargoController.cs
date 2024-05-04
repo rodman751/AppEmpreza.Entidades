@@ -1,38 +1,35 @@
 ﻿using AppEmpreza.ConsumeAPI;
 using AppEmpreza.Entidades;
+using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace AppEmpresza.MVC.Controllers
 {
-    public class DepartamentosController : Controller
+    public class CargoController : Controller
     {
-
         public INotyfService _notifyService { get; }
-        
-        private  string urlApi;
-        public DepartamentosController(IConfiguration configuration, INotyfService notyfService)
+
+        private string urlApi;
+        public CargoController(IConfiguration configuration, INotyfService notyfService)
         {
-            urlApi = configuration.GetValue("ApiUrlBase", "").ToString() + "/Departamento";
+            urlApi = configuration.GetValue("ApiUrlBase", "").ToString() + "/Cargos";
             _notifyService = notyfService;
         }
-        // GET: DepartamentosController
+        // GET: CargoController
         public ActionResult Index()
         {
-            var data = AppEmpreza.ConsumeAPI.CRUD<Departamento>.Read(urlApi);
-            //_notifyService.Success("Bienvenido a la página de departamentos");
+            var data = AppEmpreza.ConsumeAPI.CRUD<Cargo>.Read(urlApi);
             return View(data);
         }
 
-
-        // GET: DepartamentosController/Details/5
+        // GET: CargoController/Details/5
         public ActionResult Details(int id)
         {
             _notifyService.Success("Bienbenido a Details");
             try
             {
-                var data = CRUD<Departamento>.Read_ById(urlApi, id);
+                var data = CRUD<Cargo>.Read_ById(urlApi, id);
                 return View(data);
             }
             catch (Exception ex)
@@ -43,29 +40,28 @@ namespace AppEmpresza.MVC.Controllers
             }
         }
 
-        // GET: DepartamentosController/Create
+        // GET: CargoController/Create
         public ActionResult Create()
         {
-
             return View();
         }
 
-        // POST: DepartamentosController/Create
+        // POST: CargoController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Departamento data)
+        public ActionResult Create(Cargo data)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var newData = CRUD<Departamento>.Created(urlApi, data);
-                    _notifyService.Success("Departamento creado con éxito!");
+                    var newData = CRUD<Cargo>.Created(urlApi, data);
+                    _notifyService.Success("Cargo creado con éxito!");
                     return RedirectToAction("Index");
                 }
                 else
                 {
-                    _notifyService.Error("Error al crear el departamento");
+                    _notifyService.Error("Error al crear el Cargo");
                     return PartialView("Index", data);
                 }
             }
@@ -76,54 +72,54 @@ namespace AppEmpresza.MVC.Controllers
             }
         }
 
-        // GET: DepartamentosController/Edit/5
+        // GET: CargoController/Edit/5
         public ActionResult Edit(int id)
         {
-            var data = CRUD<Departamento>.Read_ById(urlApi, id);
+            var data = CRUD<Cargo>.Read_ById(urlApi, id);
             return View(data);
         }
 
-        // POST: DepartamentosController/Edit/5
+        // POST: CargoController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, Departamento data)
+        public ActionResult Edit(int id, Cargo data)
         {
             try
             {
-                CRUD<Departamento>.Update(urlApi, id, data);
-                _notifyService.Success("Departamento actualizado con éxito!");
+                CRUD<Cargo>.Update(urlApi, id, data);
+                _notifyService.Success("Cargo actualizado con éxito!");
                 return RedirectToAction(nameof(Index));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                _notifyService.Error("Error al actualizar el departamento");
+                _notifyService.Error("Error al actualizar el Cargo");
                 ModelState.AddModelError("", ex.Message);
                 return View(data);
             }
         }
 
-        // GET: DepartamentosController/Delete/5
+        // GET: CargoController/Delete/5
         public ActionResult Delete(int id)
         {
-            var data = CRUD<Departamento>.Read_ById(urlApi, id);
-            _notifyService.Warning("Esta apundo de borrar este Departameno");
+            var data = CRUD<Cargo>.Read_ById(urlApi, id);
+            _notifyService.Warning("Esta apundo de borrar este Cargo");
             return View(data);
         }
 
-        // POST: DepartamentosController/Delete/5
+        // POST: CargoController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, Departamento data)
+        public ActionResult Delete(int id, Cargo data)
         {
             try
             {
-                CRUD<Departamento>.Delete(urlApi, id);
-                _notifyService.Information("Departamento eliminado con éxito!");
+                CRUD<Cargo>.Delete(urlApi, id);
+                _notifyService.Information("cargo eliminado con éxito!");
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
-                _notifyService.Error("Error al eliminar el departamento");
+                _notifyService.Error("Error al eliminar el cargo");
                 ModelState.AddModelError("", ex.Message);
                 return View(data);
             }

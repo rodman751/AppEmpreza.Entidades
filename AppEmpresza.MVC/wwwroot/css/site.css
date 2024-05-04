@@ -18,5 +18,38 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-color: #1e1e1e;
 }
+
+@keyframes slide-in {
+    0% {
+        transform: translateY(-100%);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.modal.fade.show {
+    animation: slide-in 0.5s;
+}
+* {
+    color: white;
+}
+.modal-content {
+    background-color: #1e1e1e;
+    border: 1px solid #1e1e1e;
+    border-radius: 0;
+    color: white;
+    height: 600px;
+}
+@media (max-width: 430px) {
+    .btn {
+        width: 89.89px;
+        height: 33.5px;
+    }
+}
+
+

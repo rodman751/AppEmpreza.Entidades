@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AppEmpreza.Entidades.Departamento>
+﻿@model IEnumerable<AppEmpreza.Entidades.Cargo>
 
 @{
     ViewData["Title"] = "Index";
@@ -7,7 +7,6 @@
 <h1>Index</h1>
 
 <p>
-    @* <a asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-circle"></i> Crear</a> *@
     <a href="#" class="btn btn btn-outline-primary" id="openCreateModal"><i class="bi bi-plus-circle" style="color:#3B71CA"></i> Crear</a>
 </p>
 <div class="table-responsive">
@@ -16,7 +15,6 @@
             <tr>
                 <th>ID</th>
                 <th>Nombre</th>
-                <th>Ciudad</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -26,13 +24,11 @@
                 <tr>
                     <td>@Html.DisplayFor(modelItem => item.Id)</td>
                     <td>@Html.DisplayFor(modelItem => item.Nombre)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Ciudad)</td>
                     <td>
                         <div class="btn-group-sm-5" role="group">
                             <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary cargar"><i class="bi bi-pencil-square" style="color:#3B71CA"></i> Editar</a>
                             <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-success cargar"><i class="bi bi-book-fill" style="color:#14A44D"></i> Detalles</a>
                             <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger cargar"><i class="bi bi-trash" style="color:#DC4C64"></i> Borrar</a>
-
                         </div>
                     </td>
                 </tr>
@@ -50,9 +46,9 @@
         @successMessage
     </div>
 }
-<div id="modal-container" class="modal fade"  tabindex="-1" role="dialog">
+<div id="modal-container" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-xl" role="document">
-        <div class="modal-content" >
+        <div class="modal-content">
             <!-- El contenido del modal se cargará aquí -->
         </div>
     </div>
@@ -68,7 +64,7 @@
             $('#openCreateModal').on('click', function () {
                 $('#loading').show(); // Mostrar el indicador de carga
 
-                $.get('@Url.Action("Create", "Departamentos")', function (data) {
+                $.get('@Url.Action("Create", "Cargo")', function (data) {
                     $('#modal-container .modal-content').html(data);
                     $('#modal-container').modal({
                         backdrop: 'static',
@@ -90,9 +86,5 @@
                 $('#loading').hide(); // Ocultar el indicador de carga
             });
         });
-
-
-
     </script>
-
 }
