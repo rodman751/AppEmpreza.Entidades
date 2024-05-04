@@ -3,6 +3,7 @@ using AppEmpreza.Entidades;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace AppEmpresza.MVC.Controllers
 {
@@ -11,9 +12,13 @@ namespace AppEmpresza.MVC.Controllers
         public INotyfService _notifyService { get; }
 
         private string urlApi;
+
         public EmpleadosController(IConfiguration configuration, INotyfService notyfService)
         {
             urlApi = configuration.GetValue("ApiUrlBase", "").ToString() + "/Empleado";
+
+
+
             _notifyService = notyfService;
         }
         // GET: EmpleadosController
@@ -44,6 +49,11 @@ namespace AppEmpresza.MVC.Controllers
         // GET: EmpleadosController/Create
         public ActionResult Create()
         {
+            var cargos = CRUD<Cargo>.Read("https://appemprezaapi20240501102555.azurewebsites.net/api/Cargos");
+            var departamentos = CRUD<Departamento>.Read("https://appemprezaapi20240501102555.azurewebsites.net/api/Departamento");
+            ViewBag.Cargos = new SelectList(cargos, "Id", "Nombre");
+            ViewBag.Departamentos = new SelectList(departamentos, "Id", "Nombre");
+
             return View();
         }
 
@@ -57,6 +67,7 @@ namespace AppEmpresza.MVC.Controllers
                 if (ModelState.IsValid)
                 {
                     var newData = CRUD<Empleados>.Created(urlApi, data);
+                   
                     _notifyService.Success("Empleados creado con éxito!");
                     return RedirectToAction("Index");
                 }
@@ -77,6 +88,10 @@ namespace AppEmpresza.MVC.Controllers
         public ActionResult Edit(int id)
         {
             var data = CRUD<Empleados>.Read_ById(urlApi, id);
+            var cargos = CRUD<Cargo>.Read("https://appemprezaapi20240501102555.azurewebsites.net/api/Cargos");
+            var departamentos = CRUD<Departamento>.Read("https://appemprezaapi20240501102555.azurewebsites.net/api/Departamento");
+            ViewBag.Cargos = new SelectList(cargos, "Id", "Nombre");
+            ViewBag.Departamentos = new SelectList(departamentos, "Id", "Nombre");
 
             return View(data);
         }
@@ -126,5 +141,8 @@ namespace AppEmpresza.MVC.Controllers
                 return View(data);
             }
         }
+
+       
+
     }
 }

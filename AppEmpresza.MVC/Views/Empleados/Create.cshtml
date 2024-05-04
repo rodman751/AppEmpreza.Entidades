@@ -45,13 +45,13 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="CargoId" class="control-label"></label>
-                    <input asp-for="CargoId" class="form-control" required />
+                    <select asp-for="CargoId" asp-items="ViewBag.Cargos" class="form-control" required></select>
                     <span asp-validation-for="CargoId" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="DepartamentoId" class="control-label"></label>
-                    <input asp-for="DepartamentoId" class="form-control" required />
-                    <span asp-validation-for="DepartamentoId" class="text-danger"></span>
+                    <select asp-for="DepartamentoId" asp-items="ViewBag.Departamentos" class="form-control" required></select>
+                    <span asp-validation-for="DepartamentoId" class="text-danger text-black"></span>
                 </div>
                 <div class="form-group" style="padding-top:20px">
                     <div class="row">
@@ -59,7 +59,7 @@
                             <button type="submit" class="btn btn-primary btn-block"><i class="bi bi-check-lg"></i> Guardar</button>
                         </div>
                         <div class="col-md-4">
-                            <a asp-action="Index" class="btn btn-secondary btn-block"><i class="bi bi-arrow-90deg-left"></i> Volver a la Lista</a>
+                            <a asp-action="Index" class="btn btn-secondary btn-block"><i class="bi bi-arrow-90deg-left"></i>Regresar</a>
                         </div>
                     </div>
                 </div>
