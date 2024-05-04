@@ -24,7 +24,12 @@ namespace AppEmpreza.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Empleados>>> GetEmpleados()
         {
-            return await _context.Empleados.ToListAsync();
+            var empleados = await _context.Empleados
+                .Include(e => e.Cargos)
+                .Include(e => e.Departamento)
+                .ToListAsync();
+
+            return empleados;
         }
 
         // GET: api/Empleado/5
