@@ -20,9 +20,22 @@ namespace AppEmpresza.MVC.Controllers
         // GET: DepartamentosController
         public ActionResult Index()
         {
-            var data = AppEmpreza.ConsumeAPI.CRUD<Departamento>.Read(urlApi);
-            //_notifyService.Success("Bienvenido a la página de departamentos");
-            return View(data);
+            try
+            {
+                var data = AppEmpreza.ConsumeAPI.CRUD<Departamento>.Read(urlApi);
+                //_notifyService.Success("Bienvenido a la página de departamentos");
+                return View(data);
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message == "La API está cargando o ha ocurrido un error")
+                {
+                    _notifyService.Error("Error al cargar los datos, La API está cargando o ha ocurrido un error, vuelva a intentarlo");
+                    ModelState.AddModelError("", ex.Message);
+                    return RedirectToAction("Index", "ErrorAPI");
+                }
+                throw;
+            }
         }
 
 
